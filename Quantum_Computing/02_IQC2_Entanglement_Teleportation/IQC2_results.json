@@ -1,0 +1,248 @@
+{
+  "metadata": {
+    "practice": "IQC-2",
+    "language": "Python",
+    "libraries": [
+      "Qiskit",
+      "Qiskit Aer",
+      "SciPy",
+      "NumPy",
+      "Matplotlib"
+    ],
+    "shots": 1000,
+    "seed": 2026,
+    "significance_level": 0.05
+  },
+  "bell_states": {
+    "Phi+": {
+      "counts": {
+        "00": 504,
+        "01": 0,
+        "10": 0,
+        "11": 496
+      },
+      "theoretical_probabilities": {
+        "00": 0.4999999999999999,
+        "01": 0.0,
+        "10": 0.0,
+        "11": 0.4999999999999999
+      },
+      "chi_square": 0.06400000000000002,
+      "p_value": 0.8002819583293617
+    },
+    "Phi-": {
+      "counts": {
+        "00": 510,
+        "01": 0,
+        "10": 0,
+        "11": 490
+      },
+      "theoretical_probabilities": {
+        "00": 0.4999999999999999,
+        "01": 0.0,
+        "10": 0.0,
+        "11": 0.4999999999999999
+      },
+      "chi_square": 0.4000000000000001,
+      "p_value": 0.5270892568655381
+    },
+    "Psi+": {
+      "counts": {
+        "00": 0,
+        "01": 500,
+        "10": 500,
+        "11": 0
+      },
+      "theoretical_probabilities": {
+        "00": 0.0,
+        "01": 0.4999999999999999,
+        "10": 0.4999999999999999,
+        "11": 0.0
+      },
+      "chi_square": 5.169878828456424e-29,
+      "p_value": 0.9999999999999942
+    },
+    "Psi-": {
+      "counts": {
+        "00": 0,
+        "01": 524,
+        "10": 476,
+        "11": 0
+      },
+      "theoretical_probabilities": {
+        "00": 0.0,
+        "01": 0.4999999999999999,
+        "10": 0.4999999999999999,
+        "11": 0.0
+      },
+      "chi_square": 2.3040000000000003,
+      "p_value": 0.12904130509946798
+    }
+  },
+  "superdense_coding": {
+    "00": {
+      "counts": {
+        "00": 1000
+      },
+      "decoded_message": "00"
+    },
+    "01": {
+      "counts": {
+        "01": 1000
+      },
+      "decoded_message": "01"
+    },
+    "10": {
+      "counts": {
+        "10": 1000
+      },
+      "decoded_message": "10"
+    },
+    "11": {
+      "counts": {
+        "11": 1000
+      },
+      "decoded_message": "11"
+    }
+  },
+  "teleportation": {
+    "0": {
+      "computational_basis": {
+        "counts": {
+          "0": 1000,
+          "1": 0
+        },
+        "expected_P1": 0.0,
+        "binomial_test": null
+      },
+      "after_hadamard": {
+        "counts": {
+          "0": 493,
+          "1": 507
+        },
+        "expected_P1": 0.4999999999999999,
+        "binomial_test": {
+          "statistic": 0.507,
+          "p_value": 0.6810229832764906
+        }
+      },
+      "coherent_verification_fidelity": 0.9999999999999996
+    },
+    "1": {
+      "computational_basis": {
+        "counts": {
+          "0": 0,
+          "1": 1000
+        },
+        "expected_P1": 1.0,
+        "binomial_test": null
+      },
+      "after_hadamard": {
+        "counts": {
+          "0": 492,
+          "1": 508
+        },
+        "expected_P1": 0.4999999999999999,
+        "binomial_test": {
+          "statistic": 0.508,
+          "p_value": 0.6352781793395377
+        }
+      },
+      "coherent_verification_fidelity": 0.9999999999999996
+    },
+    "+": {
+      "computational_basis": {
+        "counts": {
+          "0": 492,
+          "1": 508
+        },
+        "expected_P1": 0.4999999999999999,
+        "binomial_test": {
+          "statistic": 0.508,
+          "p_value": 0.6352781793395377
+        }
+      },
+      "after_hadamard": {
+        "counts": {
+          "0": 1000,
+          "1": 0
+        },
+        "expected_P1": 0.0,
+        "binomial_test": null
+      },
+      "coherent_verification_fidelity": 0.9999999999999993
+    },
+    "-": {
+      "computational_basis": {
+        "counts": {
+          "0": 493,
+          "1": 507
+        },
+        "expected_P1": 0.4999999999999999,
+        "binomial_test": {
+          "statistic": 0.507,
+          "p_value": 0.6810229832764906
+        }
+      },
+      "after_hadamard": {
+        "counts": {
+          "0": 0,
+          "1": 1000
+        },
+        "expected_P1": 0.9999999999999996,
+        "binomial_test": null
+      },
+      "coherent_verification_fidelity": 0.9999999999999993
+    },
+    "i": {
+      "computational_basis": {
+        "counts": {
+          "0": 494,
+          "1": 506
+        },
+        "expected_P1": 0.4999999999999999,
+        "binomial_test": {
+          "statistic": 0.506,
+          "p_value": 0.7279715978433609
+        }
+      },
+      "after_hadamard": {
+        "counts": {
+          "0": 495,
+          "1": 505
+        },
+        "expected_P1": 0.4999999999999999,
+        "binomial_test": {
+          "statistic": 0.505,
+          "p_value": 0.7759635149561624
+        }
+      },
+      "coherent_verification_fidelity": 0.9999999999999993
+    },
+    "-i": {
+      "computational_basis": {
+        "counts": {
+          "0": 495,
+          "1": 505
+        },
+        "expected_P1": 0.4999999999999999,
+        "binomial_test": {
+          "statistic": 0.505,
+          "p_value": 0.7759635149561624
+        }
+      },
+      "after_hadamard": {
+        "counts": {
+          "0": 495,
+          "1": 505
+        },
+        "expected_P1": 0.4999999999999999,
+        "binomial_test": {
+          "statistic": 0.505,
+          "p_value": 0.7759635149561624
+        }
+      },
+      "coherent_verification_fidelity": 0.9999999999999993
+    }
+  }
+}

@@ -1,0 +1,7 @@
+welch_segments: 63
+stft_frames: 249
+periodogram_peak_bin: 400
+welch_peak_bin: 400
+periodogram_peak_db: 28.372080943255806
+welch_peak_db: 28.591997410487096
+s2_duty_cycle: 0.5859375

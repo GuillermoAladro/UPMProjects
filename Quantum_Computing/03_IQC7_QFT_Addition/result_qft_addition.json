@@ -1,0 +1,162 @@
+{
+  "metadata": {
+    "practice": "IQC-7",
+    "language": "Python",
+    "shots": 2000,
+    "seed": 2026,
+    "hardware_disclaimer": "The noisy data were generated with a local Qiskit Aer noise model. They are not measurements from an IBM Quantum processor.",
+    "noise_model": {
+      "one_qubit_depolarizing_probability": 0.004,
+      "two_qubit_depolarizing_probability": 0.025,
+      "readout_matrix": [
+        [
+          0.975,
+          0.025
+        ],
+        [
+          0.035,
+          0.965
+        ]
+      ]
+    }
+  },
+  "teleportation": {
+    "0": {
+      "ideal_verification_counts": {
+        "0": 2000,
+        "1": 0
+      },
+      "noisy_verification_counts": {
+        "0": 1833,
+        "1": 167
+      },
+      "ideal_success_rate": 1.0,
+      "noisy_success_rate": 0.9165
+    },
+    "1": {
+      "ideal_verification_counts": {
+        "0": 2000,
+        "1": 0
+      },
+      "noisy_verification_counts": {
+        "0": 1852,
+        "1": 148
+      },
+      "ideal_success_rate": 1.0,
+      "noisy_success_rate": 0.926
+    },
+    "+": {
+      "ideal_verification_counts": {
+        "0": 2000,
+        "1": 0
+      },
+      "noisy_verification_counts": {
+        "0": 1851,
+        "1": 149
+      },
+      "ideal_success_rate": 1.0,
+      "noisy_success_rate": 0.9255
+    },
+    "-": {
+      "ideal_verification_counts": {
+        "0": 2000,
+        "1": 0
+      },
+      "noisy_verification_counts": {
+        "0": 1826,
+        "1": 174
+      },
+      "ideal_success_rate": 1.0,
+      "noisy_success_rate": 0.913
+    },
+    "i": {
+      "ideal_verification_counts": {
+        "0": 2000,
+        "1": 0
+      },
+      "noisy_verification_counts": {
+        "0": 1789,
+        "1": 211
+      },
+      "ideal_success_rate": 1.0,
+      "noisy_success_rate": 0.8945
+    },
+    "-i": {
+      "ideal_verification_counts": {
+        "0": 2000,
+        "1": 0
+      },
+      "noisy_verification_counts": {
+        "0": 1789,
+        "1": 211
+      },
+      "ideal_success_rate": 1.0,
+      "noisy_success_rate": 0.8945
+    }
+  },
+  "qft_addition": {
+    "input_state": "(|2>|9> + |6>|5>)/sqrt(2)",
+    "expected_output": "(|2>|11> + |6>|11>)/sqrt(2)",
+    "ideal_state_fidelity": 0.9999999999999984,
+    "expected_bitstrings_q7_to_q0": [
+      "10110010",
+      "10110110"
+    ],
+    "ideal_counts": {
+      "10110110": 1020,
+      "10110010": 980
+    },
+    "noisy_top_counts": {
+      "10110010": 374,
+      "10110110": 323,
+      "00110010": 87,
+      "00110110": 72,
+      "10100110": 56,
+      "01110110": 56,
+      "10010010": 51,
+      "11110110": 49,
+      "11110010": 46,
+      "10100010": 42,
+      "10010110": 40,
+      "01110010": 40
+    },
+    "ideal_sum_register_counts": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 2000,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    },
+    "noisy_sum_register_counts": {
+      "0": 12,
+      "1": 46,
+      "2": 56,
+      "3": 223,
+      "4": 22,
+      "5": 50,
+      "6": 34,
+      "7": 132,
+      "8": 32,
+      "9": 119,
+      "10": 124,
+      "11": 830,
+      "12": 66,
+      "13": 81,
+      "14": 37,
+      "15": 136
+    },
+    "ideal_probability_b_equals_11": 1.0,
+    "noisy_probability_b_equals_11": 0.415
+  }
+}

@@ -1,0 +1,387 @@
+FAST CONVOLUTION AND BLOCK-BASED PROCESSING
+
+This package contains four MATLAB scripts:
+
+1. AlgoritmoDeFiltrado.m
+2. FiltradoPorBloques.m
+3. AlgoritmoOverlapSave.m
+4. PasosOverlapSave.m
+
+The examples replace long time-domain convolution operations with
+frequency-domain multiplication. They focus on the overlap-save method,
+which is commonly used for long signals and real-time data streams.
+
+MATLAB REQUIREMENT
+
+The scripts use functions from the Signal Processing Toolbox:
+
+    buffer
+    fir1
+
+
+======================================================================
+BACKGROUND: LINEAR AND CIRCULAR CONVOLUTION
+======================================================================
+
+For an input x[n] of length P and an FIR impulse response h[n] of length L,
+the linear-convolution output has length:
+
+    P + L - 1
+
+Direct convolution evaluates many multiply-and-add operations in the time
+domain. For long filters or signals, FFT-based methods can be more
+efficient.
+
+The DFT multiplication property is:
+
+    y[n] = x[n] * h[n]
+
+corresponds to:
+
+    Y[k] = X[k]H[k]
+
+However, multiplying two M-point DFTs produces M-point circular
+convolution. Linear convolution is obtained only when enough zero padding
+is used or when a valid block-processing method is applied.
+
+
+======================================================================
+THE OVERLAP-SAVE METHOD
+======================================================================
+
+Let:
+
+    L = filter length
+    M = FFT and block length
+    R = M - L + 1
+
+The method uses M-sample input blocks with an overlap of L-1 samples.
+Each block is processed as follows:
+
+1. Form an M-sample block.
+2. Calculate its M-point FFT.
+3. Multiply by the previously calculated M-point FFT of the filter.
+4. Calculate the inverse FFT.
+5. Discard the first L-1 output samples.
+6. Keep the final R samples.
+7. Concatenate the valid samples from all blocks.
+
+The first L-1 samples are discarded because they contain time-domain
+aliasing caused by circular convolution. The remaining R samples equal the
+corresponding linear-convolution samples.
+
+
+======================================================================
+1. AlgoritmoDeFiltrado.m
+======================================================================
+
+PURPOSE
+
+This script provides a general overlap-save implementation for:
+
+    - A 1,000-sample random input.
+    - A 100-sample random FIR impulse response.
+
+A fixed random seed is used so that the example produces the same signals
+every time it is executed.
+
+BLOCK SIZE
+
+The block and FFT length is selected as the smallest power of two that is
+not shorter than the filter:
+
+    M = 2^ceil(log2(L))
+
+For L = 100:
+
+    M = 128
+    R = M - L + 1 = 29
+
+Therefore, each FFT block has 128 samples, but only 29 new output samples
+are retained.
+
+REFERENCE OUTPUT
+
+The command:
+
+    conv(x,h)
+
+calculates direct linear convolution. This result is used as the numerical
+reference.
+
+BLOCK FORMATION
+
+The input is extended with L-1 zeros so that the final convolution tail is
+generated. The buffer function creates overlapping M-sample columns.
+
+The default buffer behavior supplies L-1 initial zeros before the first
+input sample. Adjacent blocks overlap by L-1 samples.
+
+FREQUENCY-DOMAIN FILTERING
+
+The filter FFT is calculated only once:
+
+    H = fft(h,M)
+
+Every block is transformed, multiplied by H, and transformed back:
+
+    Y_block = X_block H
+    y_block = IFFT(Y_block)
+
+The first L-1 samples of each block are removed. The valid samples are
+reshaped into one output sequence and trimmed to P+L-1 samples.
+
+OUTPUTS
+
+The script plots:
+
+    - Direct linear-convolution output.
+    - Overlap-save output.
+    - Numerical difference between both results.
+    - Magnitude spectrum of the output.
+
+The maximum absolute error is printed in the Command Window. It should be
+close to floating-point roundoff.
+
+
+======================================================================
+2. FiltradoPorBloques.m
+======================================================================
+
+PURPOSE
+
+This script presents a small numerical overlap-save example that is easy to
+inspect manually.
+
+The sequences are:
+
+    x[n] = 0.5, 1.0, 1.5, ..., 6.0
+    h[n] = 3, 2, 1
+
+The parameters are:
+
+    L = 3
+    M = 6
+    overlap = L - 1 = 2
+    R = M - L + 1 = 4
+
+Each six-sample block therefore produces four valid output samples.
+
+COMPLETE OUTPUT LENGTH
+
+The direct linear-convolution length is:
+
+    12 + 3 - 1 = 14 samples
+
+The script calculates how many blocks are required and adds enough trailing
+zeros to produce all 14 samples, including the convolution tail.
+
+BLOCK PROCESSING
+
+For every block, the script:
+
+    - Selects six input samples.
+    - Calculates six-point circular convolution with the FFT.
+    - Stores all six output values.
+    - Discards the first two values.
+    - Keeps the final four values.
+
+DISPLAY
+
+Each block is plotted separately. The valid samples are highlighted over
+the complete circular-convolution output.
+
+The final assembled overlap-save sequence is compared with direct
+convolution, and the maximum error is printed.
+
+
+======================================================================
+3. AlgoritmoOverlapSave.m
+======================================================================
+
+PURPOSE
+
+This script compares three filtering implementations for a longer signal:
+
+1. Direct time-domain convolution.
+2. Complete FFT-based linear convolution.
+3. FFT overlap-save block filtering.
+
+INPUT AND FILTER
+
+The input is a random sequence containing 2,048 samples.
+
+The filter is a 101-tap FIR low-pass filter created with:
+
+    fir1(100,0.25)
+
+The normalized cutoff 0.25 is expressed relative to the Nyquist frequency.
+
+METHOD 1: DIRECT CONVOLUTION
+
+The command conv produces the reference output. Its length is:
+
+    2048 + 101 - 1 = 2148 samples
+
+METHOD 2: COMPLETE FFT CONVOLUTION
+
+The complete sequences are zero-padded to an FFT length of at least 2,148.
+The script selects the next power of two:
+
+    Nfft_full = 4096
+
+It then calculates:
+
+    y = IFFT(FFT(x) FFT(h))
+
+and keeps the first 2,148 values.
+
+METHOD 3: OVERLAP-SAVE
+
+The overlap-save FFT length is:
+
+    M = 256
+
+With L = 101, the block advance is:
+
+    R = 256 - 101 + 1 = 156
+
+The script processes all overlapping blocks, discards the first 100 samples
+from every block, and combines the final 156 valid samples.
+
+OUTPUTS
+
+The script plots:
+
+    - Direct convolution.
+    - Complete FFT convolution.
+    - Their numerical difference.
+    - Overlap-save output.
+    - The difference between direct convolution and overlap-save.
+    - Output spectrum in decibels.
+
+The maximum errors for both FFT methods are printed. They should be near
+machine precision.
+
+
+======================================================================
+4. PasosOverlapSave.m
+======================================================================
+
+PURPOSE
+
+This script uses the same small numerical sequences as
+FiltradoPorBloques.m, but emphasizes every individual overlap-save step.
+
+For each block, it prints:
+
+    - The input block.
+    - The complete circular-convolution result.
+    - The samples that must be discarded.
+    - The valid samples that are retained.
+
+It also produces a three-part figure for every block:
+
+    1. Input block.
+    2. Circular-convolution output.
+    3. Discarded and valid portions.
+
+After all blocks have been processed, the valid samples are concatenated,
+trimmed to the expected linear-convolution length, and compared with the
+direct result.
+
+This script is intended as a detailed visual explanation of why
+overlap-save produces exact linear-convolution samples even though every
+individual FFT block performs circular convolution.
+
+
+======================================================================
+IMPORTANT MATLAB FUNCTIONS
+======================================================================
+
+conv(x,h)
+    Calculates direct linear convolution.
+
+fft(x,N)
+    Calculates an N-point DFT using the Fast Fourier Transform.
+
+ifft(X,N)
+    Calculates the inverse N-point DFT.
+
+buffer(x,M,p)
+    Divides a sequence into M-sample columns with p samples of overlap.
+
+fir1(order,cutoff)
+    Designs a windowed FIR filter.
+
+reshape
+    Rearranges the valid block outputs into one continuous row sequence.
+
+nextpow2
+    Finds the exponent of the next power of two suitable for zero padding.
+
+fftshift
+    Moves zero frequency to the center of a two-sided spectrum.
+
+
+======================================================================
+COMPUTATIONAL INTERPRETATION
+======================================================================
+
+DIRECT FIR FILTERING
+
+A direct FIR implementation requires approximately L multiplications for
+every output sample. For a very long filter, this cost can become large.
+
+FFT BLOCK FILTERING
+
+An FFT method replaces most time-domain multiplications with:
+
+    - One FFT per input block.
+    - One point-by-point complex multiplication.
+    - One inverse FFT per output block.
+
+The filter FFT is reused for every block.
+
+The method becomes attractive when the filter is long enough for the FFT
+cost to be lower than direct convolution.
+
+
+======================================================================
+BLOCK-LENGTH TRADE-OFF
+======================================================================
+
+A valid overlap-save block length must satisfy:
+
+    M >= L
+
+A very small M produces only a few valid samples per block:
+
+    R = M - L + 1
+
+This creates many blocks and repeated FFT overhead.
+
+A very large M reduces the number of blocks but increases:
+
+    - Processing latency.
+    - Memory usage.
+    - The cost of every individual FFT.
+
+Practical systems select M by balancing computational efficiency, memory,
+and latency. Powers of two are often convenient, although modern FFT
+libraries also handle many non-power-of-two lengths efficiently.
+
+
+======================================================================
+NUMERICAL DETAILS
+======================================================================
+
+The inverse FFT of real-valued data may contain extremely small imaginary
+parts caused by floating-point roundoff. The scripts use:
+
+    real(ifft(...))
+
+to remove these insignificant numerical components.
+
+The overlap-save result should match direct convolution to approximately
+machine precision. Small errors around 10^-12 or 10^-14 are normal.

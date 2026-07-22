@@ -1,0 +1,8 @@
+Practice 1 - PIN-Diode RF Switch
+Objective: Design, simulate, manufacture and measure a 1.45 GHz microstrip RF switch using a shunt PIN diode, comparing its forward- and reverse-bias S-parameters and physically retuning the prototype.
+
+Practice 2 - Coupled-Line Band-Pass Filter
+Objective: Design and build a third-order, 1 dB-ripple Chebyshev coupled-line band-pass filter centered at 1.45 GHz, convert the electrical coupling requirements into microstrip dimensions, and compare simulation with measurement.
+
+Practice 3 - Small-Signal Amplifier
+Objective: Design, construct and tune a 1.05 GHz BFR93A small-signal amplifier, including biasing, stabilization, input/output matching, layout, S-parameter measurement and hardware retuning.

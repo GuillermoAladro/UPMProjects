@@ -1,0 +1,51 @@
+DOCUMENT EXPLANATIONS
+
+1. controlador.c
+
+This program is a concurrent image-processing controller written in C for POSIX/Linux systems.
+
+Its purpose is to process several image files in parallel. The program receives an output directory as its first argument and one or more image files as the remaining arguments. For every image, it creates a child process with fork().
+
+Each child process runs the ImageMagick command-line tool through execlp() and applies a blur effect to its assigned image. The processed image is saved in the output directory with the same base filename as the original image.
+
+The parent process limits the number of simultaneously active child processes to four. It uses waitpid() to detect when children finish and to free execution slots for new processes.
+
+The program also installs a SIGTERM signal handler. When the parent receives SIGTERM, it sends the same signal to every child process whose PID was stored, allowing the whole group of processes to be terminated.
+
+Example of use:
+
+    ./controlador blurred_images original_images/*.jpg
+
+
+2. servidor.c
+
+This program is a concurrent TCP server written in C using the POSIX Sockets API.
+
+The server listens for client connections on a configurable TCP port. The default port is 1234, although another port can be selected with the -p option.
+
+Whenever a client connects, the server creates a new child process with fork(). The child process handles the complete client session, while the parent process immediately returns to accept more connections. This design allows several clients to be served at the same time.
+
+During a session, the server asks the client to enter a positive integer. It then calculates and returns the first prime number strictly greater than the received number. The client may enter "fin" to end the session.
+
+The parent process installs a SIGCHLD handler that calls waitpid() with WNOHANG. This removes finished child processes and prevents zombie processes from accumulating.
+
+Example of use:
+
+    ./servidor -p 4321
+
+A client can connect with a tool such as:
+
+    nc localhost 4321
+
+
+3. introduction_en.txt
+
+This text file contains the English translation of the project descriptions.
+
+It summarizes three software projects:
+
+- A concurrent image-processing controller in C.
+- A concurrent TCP server in C that calculates the next prime number.
+- A multithreaded Java server designed for telemetry-data ingestion and processing.
+
+The file is intended to be used as an English introduction or portfolio description for the projects.

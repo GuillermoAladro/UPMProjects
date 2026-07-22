@@ -1,0 +1,483 @@
+DIGITAL FIR AND IIR FILTER DESIGN, APPLICATION, AND COMPARISON
+
+This package contains five MATLAB files and two data files:
+
+1. FiltroFIR.m
+2. FiltroIIR.m
+3. dibuja_plantilla.m
+4. EstudioRF.m
+5. EstudioRetardoGrupo.m
+6. caso_ruido.mat
+7. caso_fase.mat
+
+The scripts design low-pass digital filters from strict passband and
+stopband specifications. They compare FIR and IIR architectures in terms
+of frequency response, filtering behavior, phase, group delay, and
+computational structure.
+
+MATLAB REQUIREMENT
+
+The scripts use functions from the Signal Processing Toolbox, including:
+
+    kaiserord
+    kaiser
+    freqz
+    buttord
+    butter
+    cheb1ord
+    cheby1
+    bilinear
+    grpdelay
+
+
+======================================================================
+COMMON FILTER SPECIFICATIONS
+======================================================================
+
+All design scripts use the following specifications:
+
+    Sampling frequency:                  fs = 20,000 Hz
+    Passband edge:                       fp = 750 Hz
+    Stopband edge:                       fa = 1,500 Hz
+    Maximum passband attenuation:        0.9151 dB
+    Minimum stopband attenuation:        60 dB
+
+The physical frequencies are converted to digital angular frequencies by:
+
+    omega = 2*pi*f/fs
+
+Therefore:
+
+    omega_p = 2*pi*fp/fs
+    omega_a = 2*pi*fa/fs
+
+The passband and stopband tolerances are converted from decibels to linear
+magnitude values:
+
+    delta_p = 1 - 10^(-0.9151/20)
+    delta_a = 10^(-60/20)
+
+The resulting filter is a low-pass filter because omega_p is lower than
+omega_a.
+
+
+======================================================================
+1. FiltroFIR.m
+======================================================================
+
+PURPOSE
+
+This script designs a linear-phase FIR low-pass filter using the
+window method and a Kaiser window.
+
+SPECIFICATION MASK
+
+The function dibuja_plantilla is first called to display the forbidden
+regions of the frequency-domain specification. A valid filter response
+must remain outside the shaded regions.
+
+ORDER ESTIMATION
+
+The command:
+
+    kaiserord(...)
+
+estimates:
+
+    - The required FIR order.
+    - The cutoff information.
+    - The Kaiser beta parameter.
+    - The filter type.
+
+The estimated order is forced to be even:
+
+    order = order + rem(order,2)
+
+An even-order symmetric FIR filter has an odd number of coefficients and
+can implement a Type-I linear-phase low-pass response.
+
+IDEAL IMPULSE RESPONSE
+
+The cutoff frequency is selected at the center of the transition band:
+
+    omega_c = (omega_p + omega_a)/2
+
+The ideal low-pass impulse response is:
+
+    h_ideal[n] = (omega_c/pi)
+                 sinc((omega_c/pi)n)
+
+This ideal response is infinitely long and cannot be implemented directly.
+
+KAISER WINDOW
+
+The ideal impulse response is multiplied by a finite Kaiser window:
+
+    h_fir[n] = h_ideal[n] w[n]
+
+The Kaiser window provides a controllable compromise between transition
+width and stopband attenuation.
+
+OUTPUTS
+
+The script plots:
+
+    - The required specification mask.
+    - The ideal impulse response.
+    - The finite Kaiser-windowed impulse response.
+    - The designed FIR magnitude response in decibels.
+
+The filter order, number of coefficients, and Kaiser beta value are printed
+in the MATLAB Command Window.
+
+MAIN CHARACTERISTIC
+
+Because the impulse response is symmetric, the FIR filter has linear phase
+and an approximately constant group delay equal to half its order.
+
+
+======================================================================
+2. FiltroIIR.m
+======================================================================
+
+PURPOSE
+
+This script designs two IIR low-pass filters with the same specifications:
+
+    - Butterworth
+    - Chebyshev Type I
+
+Both filters are designed from analog prototypes and converted to digital
+form with the bilinear transformation.
+
+PREWARPING
+
+The bilinear transform introduces nonlinear frequency warping. The desired
+digital band edges are therefore prewarped before designing the analog
+prototype:
+
+    Omega_p = (2/Td) tan(omega_p/2)
+    Omega_a = (2/Td) tan(omega_a/2)
+
+The script uses Td = 1 because the normalized digital design is expressed
+in samples.
+
+DECIBEL SPECIFICATIONS
+
+The linear tolerances are converted back to the conventional IIR design
+parameters:
+
+    Rp = -20 log10(1 - delta_p)
+    Rs = -20 log10(delta_a)
+
+BUTTERWORTH FILTER
+
+The Butterworth filter has a maximally flat passband magnitude response.
+Its order and analog cutoff frequency are calculated with buttord. The
+analog prototype is created with butter and converted to a digital filter
+with bilinear.
+
+CHEBYSHEV TYPE-I FILTER
+
+The Chebyshev Type-I filter allows controlled passband ripple in exchange
+for a sharper transition. Its order is usually lower than that of a
+Butterworth filter for the same strict specifications.
+
+Its order is calculated with cheb1ord, the analog prototype is created
+with cheby1, and the bilinear transformation produces the digital
+coefficients.
+
+OUTPUTS
+
+The script plots:
+
+    - Both responses over the low-pass specification mask.
+    - Both responses using rad/sample.
+    - Both responses using physical frequency in hertz.
+
+The two filter orders are printed in the Command Window.
+
+MAIN COMPARISON
+
+Butterworth:
+    - Smooth, monotonic passband.
+    - No passband ripple.
+    - Often requires a higher order.
+
+Chebyshev Type I:
+    - Equiripple passband.
+    - Sharper transition for a given order.
+    - Nonlinear phase.
+
+
+======================================================================
+3. dibuja_plantilla.m
+======================================================================
+
+PURPOSE
+
+This is a helper function that draws the forbidden regions of a low-pass
+or high-pass filter specification.
+
+INPUTS
+
+    omega_p
+        Passband edge in rad/sample.
+
+    omega_a
+        Stopband edge in rad/sample.
+
+    delta_p_lower
+        Maximum allowed downward deviation from unity in the passband.
+
+    delta_p_upper
+        Maximum allowed upward deviation from unity in the passband.
+
+    delta_a
+        Maximum allowed stopband magnitude.
+
+    scale
+        'lin' for linear magnitude.
+        'log' for magnitude in decibels.
+
+FILTER TYPE
+
+The function automatically interprets the specification as:
+
+    Low-pass:
+        omega_p < omega_a
+
+    High-pass:
+        omega_p > omega_a
+
+The shaded regions represent combinations of frequency and magnitude that
+violate the requirements. A valid response must stay outside those areas.
+
+The function also validates the tolerance values and preserves the previous
+MATLAB hold state.
+
+
+======================================================================
+4. EstudioRF.m
+======================================================================
+
+PURPOSE
+
+This script applies FIR and IIR low-pass filters to a real noisy signal
+stored in:
+
+    caso_ruido.mat
+
+The file must contain:
+
+    x_frec_noise
+
+INPUT PREPARATION
+
+The loaded signal is converted to a row vector so that all filtering and
+plotting operations use a consistent orientation.
+
+FIR FILTER
+
+The FIR filter is the same Kaiser-window design used in FiltroFIR.m:
+
+    - Estimate the order with kaiserord.
+    - Force an even order.
+    - Create the ideal low-pass impulse response.
+    - Multiply it by a Kaiser window.
+    - Filter the noisy signal with filter(h_fir,1,x).
+
+IIR FILTER
+
+A Butterworth analog prototype is designed after prewarping the frequency
+edges. The bilinear transform produces the digital numerator and
+denominator coefficients:
+
+    b_iir
+    a_iir
+
+The noisy signal is filtered correctly with:
+
+    filter(b_iir,a_iir,x)
+
+This is important because an IIR filter must use both its numerator and
+denominator coefficients. It must not be replaced by the magnitude of an
+inverse FFT.
+
+OUTPUTS
+
+The script plots:
+
+    - FIR and IIR frequency responses over the specification mask.
+    - The original noisy signal and FIR output.
+    - The original noisy signal and IIR output.
+
+The FIR and IIR orders are printed in the Command Window.
+
+EXPECTED RESULT
+
+Both filters attenuate high-frequency noise above the transition band. The
+FIR output has linear phase but a larger constant delay. The IIR output
+usually has a shorter effective delay and lower order, but its phase is
+nonlinear.
+
+
+======================================================================
+5. EstudioRetardoGrupo.m
+======================================================================
+
+PURPOSE
+
+This script compares the phase-related behavior of FIR and IIR filters
+using the signal stored in:
+
+    caso_fase.mat
+
+The file must contain:
+
+    x_fase
+
+FILTERS
+
+The script designs:
+
+    - A symmetric Kaiser-window FIR low-pass filter.
+    - A Butterworth IIR low-pass filter obtained through the bilinear
+      transformation.
+
+MAGNITUDE COMPARISON
+
+The script plots:
+
+    - The FIR magnitude response.
+    - The IIR magnitude response.
+    - The normalized spectrum of the input signal.
+
+The input spectrum is normalized to 0 dB at its largest component so that
+it can be compared meaningfully with the filter responses.
+
+TIME-DOMAIN FILTERING
+
+The signal is filtered with:
+
+    y_fir = filter(h_fir,1,x_fase)
+    y_iir = filter(b_iir,a_iir,x_fase)
+
+The FIR output is delayed by approximately half the FIR order while
+preserving waveform shape within the passband.
+
+The IIR output generally has frequency-dependent delay. Different
+frequency components may be shifted by different amounts, which can alter
+the waveform.
+
+GROUP DELAY
+
+Group delay describes how much the envelope of each frequency component is
+delayed:
+
+    tau_g(omega) = -d phi(omega)/d omega
+
+The script calculates it with grpdelay.
+
+Expected behavior:
+
+    FIR:
+        Nearly constant group delay over frequency because the filter has
+        linear phase.
+
+    IIR:
+        Frequency-dependent group delay because the phase response is
+        nonlinear.
+
+The expected FIR delay, equal to order/2 samples, is printed in the
+Command Window.
+
+
+======================================================================
+6. caso_ruido.mat
+======================================================================
+
+This data file contains:
+
+    x_frec_noise
+
+The variable is a 4,000-sample signal containing useful low-frequency
+content and unwanted frequency-domain noise. EstudioRF.m uses it to compare
+the practical noise-reduction behavior of the FIR and IIR filters.
+
+
+======================================================================
+7. caso_fase.mat
+======================================================================
+
+This data file contains:
+
+    x_fase
+
+The variable is a 4,000-sample signal intended to reveal the effect of
+filter phase and group delay. EstudioRetardoGrupo.m uses it to compare the
+linear-phase FIR output with the nonlinear-phase IIR output.
+
+
+======================================================================
+IMPORTANT CORRECTIONS INCLUDED IN THESE VERSIONS
+======================================================================
+
+1. The IIR output is calculated with the actual numerator and denominator:
+
+       filter(b_iir,a_iir,x)
+
+   instead of filtering with FIR coefficients or with the magnitude of an
+   inverse FFT.
+
+2. The bilinear-transform outputs are assigned consistently as numerator
+   and denominator coefficients.
+
+3. The physical frequency axis is correctly limited to the Nyquist range:
+
+       0 to fs/2
+
+4. Logarithmic magnitudes use:
+
+       20*log10(abs(H)+eps)
+
+   to prevent log10(0) from producing negative infinity.
+
+5. The signal spectrum used in the phase study is mapped consistently to
+   the 0-to-pi frequency interval.
+
+6. Plot titles, comments, labels, legends, and error messages are written
+   in English.
+
+
+======================================================================
+FIR AND IIR SUMMARY
+======================================================================
+
+FIR FILTER
+
+Advantages:
+    - Can provide exact linear phase.
+    - Always stable when implemented without feedback.
+    - Simple phase and group-delay interpretation.
+
+Disadvantages:
+    - Often requires a high order.
+    - Uses more coefficients and multiplications.
+    - Introduces a larger constant delay.
+
+IIR FILTER
+
+Advantages:
+    - Usually meets a magnitude specification with a much lower order.
+    - Requires fewer coefficients and operations.
+    - Often introduces less overall latency.
+
+Disadvantages:
+    - Has nonlinear phase in standard designs.
+    - Group delay varies with frequency.
+    - Uses feedback and requires attention to numerical stability.
+
+The preferred architecture depends on whether phase preservation,
+computational cost, memory, transition sharpness, or latency is the most
+important design requirement.

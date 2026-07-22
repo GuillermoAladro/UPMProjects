@@ -1,0 +1,448 @@
+MATLAB CODE EXPLANATION
+Sampling, Aliasing, Interpolation, Decimation, and Multirate Signal Processing
+
+This package contains three MATLAB scripts and one MAT data file:
+
+1. MuestreoSC.m
+2. interpYdiez.m
+3. CambioTasaMuestreo.m
+4. voz1_8khz.mat
+
+The scripts illustrate the Nyquist-Shannon sampling theorem, aliasing, discrete-time spectra, interpolation, decimation, and audio sample-rate conversion.
+
+
+============================================================
+1. MuestreoSC.m
+============================================================
+
+PURPOSE
+
+This script generates a 1 kHz cosine signal and samples it at two different sampling frequencies. Its main purpose is to compare correct sampling with undersampling and to demonstrate aliasing.
+
+SIGNAL DEFINITION
+
+The angular frequency is:
+
+    w = 2000*pi rad/s
+
+The corresponding ordinary frequency is:
+
+    f0 = w/(2*pi) = 1000 Hz
+
+Therefore, the cosine signal completes 1000 cycles per second and has a period of:
+
+    T = 1/f0 = 1 ms
+
+A very small time step, Tc = 10 microseconds, is used to create a dense time-domain representation that approximates a continuous-time signal:
+
+    xc(t) = cos(w*t)
+
+FIRST SAMPLING CASE: fs1 = 10 kHz
+
+The first discrete-time sequence is generated using a sampling frequency of 10 kHz:
+
+    xn1[n] = cos(w*n*Ts1)
+
+Because 10 kHz is greater than twice the signal frequency, the Nyquist condition is satisfied:
+
+    fs1 > 2*f0
+    10000 Hz > 2000 Hz
+
+The script plots:
+
+- The continuous-time cosine signal during its first 5 ms.
+- The sampled sequence during the same interval.
+- The magnitude of its FFT between -pi and pi radians per sample.
+
+The sampled sequence correctly represents the original 1 kHz signal.
+
+SECOND SAMPLING CASE: fs2 = 800 Hz
+
+The second sequence uses a sampling frequency of only 800 Hz.
+
+This frequency does not satisfy the Nyquist condition:
+
+    fs2 < 2*f0
+    800 Hz < 2000 Hz
+
+As a result, aliasing occurs. The discrete samples appear to represent a frequency different from the original 1 kHz signal.
+
+For this case, the script also plots:
+
+- The original continuous-time signal.
+- The undersampled discrete-time sequence.
+- The FFT magnitude between -pi and pi radians per sample.
+
+The comparison shows how an insufficient sampling rate changes the apparent frequency of the sampled signal.
+
+OPTIONAL AUDIO PLAYBACK
+
+The final sound commands are commented out. They may be enabled to play the two sequences with their correct sampling rates:
+
+    sound(xn1,fs1)
+    sound(xn2,fs2)
+
+The first one is heard as the original 1 kHz tone. The second one demonstrates the audible effect of aliasing.
+
+
+============================================================
+2. interpYdiez.m
+============================================================
+
+PURPOSE
+
+This script studies interpolation and decimation of a sampled cosine signal. It compares basic sample insertion or removal functions with MATLAB functions that also apply low-pass filtering.
+
+The script requires MATLAB's Signal Processing Toolbox.
+
+ORIGINAL SIGNAL
+
+A 1 kHz cosine signal is sampled at:
+
+    fs = 12 kHz
+
+Since 12 kHz is greater than 2 kHz, the original signal satisfies the Nyquist criterion.
+
+The script first displays:
+
+- The first 10 ms of the sampled signal.
+- Its magnitude spectrum between -pi and pi radians per sample.
+- Its magnitude spectrum on a frequency axis expressed in hertz.
+
+The FFT is shifted with fftshift so that zero frequency appears at the center of each spectrum.
+
+------------------------------------------------------------
+A. INTERPOLATION FROM 12 kHz TO 24 kHz
+------------------------------------------------------------
+
+The desired sampling frequency is 24 kHz. The conversion ratio is:
+
+    24/12 = 2
+
+Therefore, the interpolation factor is p = 2.
+
+UPSAMPLE METHOD
+
+The command:
+
+    x1p = upsample(xn,p)
+
+inserts p - 1 zeros between every pair of original samples. For p = 2, one zero is inserted after every original sample.
+
+This operation increases the sequence length and the nominal sampling frequency, but it also creates spectral images. The inserted zeros do not reconstruct the intermediate signal values.
+
+The script plots:
+
+- The first 10 ms of the zero-inserted sequence.
+- Its spectrum in normalized angular frequency.
+- Its spectrum in hertz.
+
+INTERP METHOD
+
+The command:
+
+    x1n = interp(xn,p)
+
+also increases the sampling rate by p. Unlike upsample, interp applies a low-pass interpolation filter after inserting the zeros.
+
+The filtering suppresses the spectral images and estimates meaningful values between the original samples.
+
+The script plots the interpolated sequence and its spectra so that it can be compared with the output of upsample.
+
+MAIN DIFFERENCE
+
+- upsample only inserts zeros.
+- interp inserts zeros and then applies a low-pass interpolation filter.
+
+------------------------------------------------------------
+B. DECIMATION FROM 12 kHz TO 6 kHz
+------------------------------------------------------------
+
+The desired sampling frequency is 6 kHz. The conversion ratio is:
+
+    6/12 = 1/2
+
+Therefore, the decimation factor is q = 2.
+
+DOWNSAMPLE METHOD
+
+The command:
+
+    x2p = downsample(xn,q2)
+
+keeps one sample out of every q2 samples and discards the others. For q2 = 2, every second sample is retained.
+
+Because the 1 kHz input tone is below the new Nyquist frequency of 3 kHz, this particular signal can be reduced to 6 kHz without aliasing.
+
+The script plots the downsampled sequence and its spectra.
+
+DECIMATE METHOD
+
+The command:
+
+    x2n = decimate(xn,q2)
+
+applies a low-pass anti-aliasing filter before reducing the number of samples.
+
+This is safer for general signals because frequency components above the new Nyquist limit are attenuated before samples are removed.
+
+MAIN DIFFERENCE
+
+- downsample only removes samples.
+- decimate applies an anti-aliasing low-pass filter and then removes samples.
+
+------------------------------------------------------------
+C. DECIMATION FROM 12 kHz TO 1.5 kHz
+------------------------------------------------------------
+
+The desired sampling frequency is 1.5 kHz. The conversion ratio is:
+
+    1.5/12 = 1/8
+
+Therefore, the decimation factor is q = 8.
+
+The new Nyquist frequency is:
+
+    fs4/2 = 750 Hz
+
+The original signal frequency is 1 kHz, which is higher than 750 Hz. Consequently, directly reducing the rate with downsample produces aliasing.
+
+DOWNSAMPLE BY 8
+
+The command:
+
+    x3q = downsample(xn,q3)
+
+removes samples without filtering. The 1 kHz component folds into the new frequency range and appears at an incorrect frequency.
+
+DECIMATE BY 8
+
+The command:
+
+    x3n = decimate(xn,q3)
+
+filters the sequence before reducing the sampling frequency. Since the 1 kHz tone lies above the new Nyquist frequency, the anti-aliasing filter strongly attenuates it.
+
+This comparison demonstrates that anti-alias filtering avoids frequency folding, although components outside the valid output bandwidth cannot be preserved.
+
+OUTPUT OF THE SCRIPT
+
+For each processing method, the script generates:
+
+- A stem plot of the time-domain sequence.
+- An FFT magnitude plot in normalized angular frequency.
+- An FFT magnitude plot in hertz.
+
+
+============================================================
+3. CambioTasaMuestreo.m
+============================================================
+
+PURPOSE
+
+This script converts a recorded speech signal from an initial sampling frequency of 8 kHz to a new sampling frequency of 44.1 kHz.
+
+The script compares:
+
+- Conversion in one rational resampling stage.
+- Conversion in three smaller rational resampling stages.
+
+It requires MATLAB's Signal Processing Toolbox.
+
+INPUT FILE
+
+The script loads:
+
+    voz1_8khz.mat
+
+The MAT file must contain an audio signal stored in a variable named:
+
+    x
+
+If the file also contains a variable named fs_x, that value is used as the input sampling frequency. Otherwise, the script assumes:
+
+    fs1 = 8000 Hz
+
+The command:
+
+    x = S.x(:)
+
+forces the audio signal to be a column vector, which gives consistent behavior during processing.
+
+ORIGINAL AUDIO DISPLAY
+
+A time vector is created from the sample indices and the 8 kHz sampling frequency.
+
+The script plots the original speech waveform as amplitude versus time.
+
+------------------------------------------------------------
+A. ONE-STAGE SAMPLE-RATE CONVERSION
+------------------------------------------------------------
+
+The target sampling frequency is:
+
+    fs2 = 44100 Hz
+
+The rational conversion factor is:
+
+    fs2/fs1 = 44100/8000 = 441/80
+
+The command:
+
+    [P,Q] = rat(fs2/fs1)
+
+produces:
+
+    P = 441
+    Q = 80
+
+The conversion is performed with:
+
+    xc2 = resample(x,P,Q)
+
+Conceptually, this operation interpolates by 441 and decimates by 80. MATLAB's resample function also applies the required low-pass filtering efficiently, without explicitly creating an extremely large zero-filled intermediate sequence.
+
+------------------------------------------------------------
+B. THREE-STAGE SAMPLE-RATE CONVERSION
+------------------------------------------------------------
+
+The same total ratio is factored as:
+
+    441/80 = (9/4)*(7/4)*(7/5)
+
+The conversion is therefore performed in three stages:
+
+    xcb1 = resample(x,9,4)
+    xcb3 = resample(xcb1,7,4)
+    xcb5 = resample(xcb3,7,5)
+
+The total output sampling frequency is still 44.1 kHz.
+
+A multistage design can reduce computational complexity because each filter works with smaller interpolation and decimation factors.
+
+TIME-DOMAIN COMPARISON
+
+The script displays the first 30 ms of both converted signals:
+
+- xc2: one-stage conversion.
+- xcb5: three-stage conversion.
+
+The two signals should be very similar, although small numerical and filter-design differences may be present.
+
+FREQUENCY-DOMAIN COMPARISON
+
+The script calculates FFTs for:
+
+- The original 8 kHz speech signal.
+- The one-stage 44.1 kHz result.
+- The three-stage 44.1 kHz result.
+
+The magnitudes are converted to decibels using:
+
+    20*log10(abs(X)+eps)
+
+The small value eps prevents the logarithm of zero.
+
+The original spectrum is shown from -4 kHz to 4 kHz. The output spectra are shown using the Nyquist range of the 44.1 kHz output signal.
+
+RMS ERROR
+
+The script calculates the root-mean-square difference between the one-stage and three-stage outputs:
+
+    error_rms = sqrt(mean((xc2-xcb5).^2))
+
+A small RMS error indicates that both conversion strategies produce nearly equivalent results.
+
+OPTIONAL AUDIO PLAYBACK
+
+The final commands are commented out. They can be enabled to listen to:
+
+- The original speech signal at 8 kHz.
+- The converted speech signal at 44.1 kHz.
+
+
+============================================================
+4. voz1_8khz.mat
+============================================================
+
+This is a MATLAB data file containing the speech signal used by CambioTasaMuestreo.m.
+
+Expected variable:
+
+    x       Audio sample vector
+
+Optional variable:
+
+    fs_x    Original sampling frequency
+
+The file must remain in the same folder as CambioTasaMuestreo.m unless a different path is specified in the load command.
+
+
+============================================================
+IMPORTANT MATLAB FUNCTIONS USED
+============================================================
+
+cos
+    Generates the cosine signals.
+
+plot
+    Displays continuous curves or densely sampled signals.
+
+stem
+    Displays discrete-time samples.
+
+fft
+    Calculates the discrete Fourier transform.
+
+fftshift
+    Moves the zero-frequency component to the center of the spectrum.
+
+rat
+    Approximates a sampling-rate ratio with two integers.
+
+upsample
+    Inserts zeros between samples without interpolation filtering.
+
+interp
+    Increases the sampling rate and applies interpolation filtering.
+
+downsample
+    Removes samples without anti-alias filtering.
+
+decimate
+    Applies anti-alias filtering and then reduces the sampling rate.
+
+resample
+    Performs rational sample-rate conversion with filtering.
+
+sound / soundsc
+    Plays a sequence as audio at a specified sampling frequency.
+
+
+============================================================
+MAIN CONCEPTS DEMONSTRATED
+============================================================
+
+1. Nyquist-Shannon sampling theorem
+
+A signal with maximum frequency fmax must be sampled at a frequency greater than twice fmax to avoid aliasing.
+
+2. Aliasing
+
+When the sampling frequency is too low, high-frequency components are represented as incorrect lower frequencies.
+
+3. Interpolation
+
+Interpolation increases the sampling frequency. Proper interpolation includes low-pass filtering after zero insertion.
+
+4. Decimation
+
+Decimation decreases the sampling frequency. Proper decimation includes anti-alias filtering before sample removal.
+
+5. Rational sample-rate conversion
+
+A conversion by P/Q combines interpolation by P, low-pass filtering, and decimation by Q.
+
+6. Multistage processing
+
+A large rational conversion can be divided into smaller stages to improve computational efficiency.

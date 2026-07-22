@@ -1,0 +1,11 @@
+Practice 1 - Radio Link Planning
+Objective: Design and validate a reliable three-hop 26 GHz digital radio link from Avila to Escalona by combining theoretical link-budget calculations, Xirio simulations, commercial equipment selection and ITU-R availability criteria.
+
+Practice 2 - DVB-T Repeater Planning
+Objective: Plan a DVB-T gap filler for Reduena, select its channel, site, antenna and transmitter equipment, and verify that the proposed configuration provides the required coverage and reception margin.
+
+Practice 3 - Software-Defined Radio and SINAD Measurement
+Objective: Configure an ADALM-PLUTO SDR in MATLAB and Simulink, implement an FM receiver and evaluate the received audio quality by measuring SINAD.
+
+Practice 4 - 4G-LTE Coverage
+Objective: Design and simulate a three-site, nine-sector LTE network around Avila and assess coverage, best-server regions and overlap areas to support reliable mobile service and handover.

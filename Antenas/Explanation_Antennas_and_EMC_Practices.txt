@@ -1,0 +1,307 @@
+EXPLANATION OF THE ANTENNAS AND EMC LABORATORY PRACTICES
+==========================================================
+
+This document summarizes and explains the purpose, procedure, main results, and key lessons of
+the four laboratory practices in the Antennas and Electromagnetic Compatibility course. The
+simulations are carried out mainly with FEKO using full-wave electromagnetic models, and they
+are complemented with analytical calculations and, in some sections, MATLAB.
+
+The practices follow a natural progression. Practice 1 introduces numerical analysis and basic
+wire antennas. Practice 2 studies multi-element wire structures such as arrays and Yagi
+antennas. Practice 3 focuses on printed microstrip antennas. Practice 4 deals with high-
+directivity aperture antennas: horns and parabolic reflectors.
+
+
+PRACTICE 1. WIRE ANTENNA ANALYSIS
+=================================
+
+General objective
+-----------------
+
+The first practice introduces antenna analysis using the method of moments and FEKO. Its purpose
+is to learn how to model thin conductors, choose a suitable discretization, and relate the
+simulation results to the concepts of impedance, current distribution, radiation, near field,
+far field, and bandwidth.
+
+The operating frequency is 23 MHz, so the wavelength is approximately 13.04 m. This value is
+used to define all antenna dimensions as fractions of the wavelength.
+
+Influence of the mesh
+---------------------
+
+The method of moments divides each wire into small segments. Accuracy depends on segment size:
+a very coarse mesh reduces computation time, but it may represent the current distribution
+incorrectly and produce errors in impedance and radiation patterns.
+
+Several meshes are compared, from segment lengths of approximately λ/4 down to λ/50. The study
+is carried out first with a half-wave dipole and then with an electrically long dipole. For the
+half-wave dipole, the results converge as the mesh is refined. With only a few segments, the
+sinusoidal current distribution is represented too crudely. When the segment length is reduced
+to values around λ/20 or λ/50, the differences between successive refinements become small.
+
+The problem is more evident for the long dipole because its current distribution contains
+several maxima and minima. A coarse mesh cannot reproduce all the current lobes correctly.
+Therefore, a fine mesh is selected for the remaining simulations.
+
+Field regions
+-------------
+
+The second part distinguishes three electromagnetic regions:
+
+- Reactive region: stored energy dominates and the fields decrease rapidly with distance.
+- Fresnel region: radiation exists, but the pattern still depends on distance.
+- Fraunhofer region: the angular shape of the pattern no longer changes, and the fields behave
+  approximately as a plane wave.
+
+A half-wave dipole and a 1.55λ dipole are analyzed. The radial electric-field component is mainly
+associated with reactive or induction terms, so it decreases faster than 1/r. The transverse
+components Eθ and Hφ contain the radiation term and, in the far field, decrease approximately as
+1/r. Their ratio approaches the intrinsic impedance of free space, approximately 377 Ω.
+
+The long dipole requires a greater distance to reach the far-field region because its maximum
+dimension is larger. This shows that the boundary between near field and far field depends both
+on frequency and on the electrical size of the antenna.
+
+Design of basic antennas
+------------------------
+
+A dipole close to λ/2 is adjusted until its input impedance is almost purely real. The resonant
+length is slightly shorter than half a wavelength because the conductor has a finite diameter.
+The final design has an input resistance close to 72 Ω and a gain of approximately 2.1 dBi.
+
+A monopole over a perfect conducting plane is then designed. According to image theory, its
+input resistance is approximately half that of the dipole, while its gain is about 3 dB higher
+because the radiation is concentrated in one half-space. The resulting height is close to
+0.233λ, with a resistance of about 36 Ω and a gain of approximately 5.14 dBi.
+
+Compact monopoles are also studied, including a capacitively loaded monopole, an L-shaped
+antenna, and an inverted-F antenna. These solutions reduce physical size, but they generally
+increase stored reactive energy and reduce bandwidth. Finally, loop antennas are analyzed to
+observe how impedance, current distribution, and radiation pattern change with electrical size
+and geometry.
+
+Main lesson
+-----------
+
+The practice shows that an electromagnetic simulation is reliable only when the discretization
+is appropriate. It also relates electrical size, current distribution, impedance, directivity,
+and bandwidth. Compact antennas can preserve a useful radiation pattern, but usually at the
+cost of reduced bandwidth.
+
+
+PRACTICE 2. DIPOLE ARRAYS AND YAGI ANTENNA
+==========================================
+
+General objective
+-----------------
+
+The second practice extends the analysis to structures with several elements. It studies an
+eight-element linear dipole array using a Dolph-Chebyshev distribution and a four-element Yagi
+antenna.
+
+The objective is to apply the concepts of mutual coupling, impedance matrices, S-parameters,
+array factor, sidelobe control, beam steering, directivity, and front-to-back ratio.
+
+Dolph-Chebyshev array
+---------------------
+
+The array consists of eight parallel half-wave dipoles separated by 0.4λ. Each element has an
+independent feeding port.
+
+The first step is to calculate mutual coupling. The current in each dipole depends not only on
+its own excitation voltage, but also on the fields generated by the other elements. This effect
+is represented through a mutual impedance matrix. The S-parameter matrix of the complete array
+is also obtained and converted into an impedance matrix with MATLAB.
+
+A Dolph-Chebyshev distribution is then applied to obtain a controlled sidelobe level. In this
+case, the design uses a 37 dB ratio between the main lobe and the sidelobes. The excitation
+amplitudes are symmetric: the central elements carry the highest currents, and the excitation
+decreases toward the ends. The required feeding voltages are calculated with V = Z·I, thereby
+compensating for mutual coupling.
+
+Radiation pattern, tolerances, and beam steering
+------------------------------------------------
+
+The design is checked in terms of directivity, main-beam width, and sidelobe level. Sensitivity
+to ±5% frequency variations is also studied. When frequency changes, electrical lengths, mutual
+impedances, and phase relationships also change, so the radiation pattern degrades.
+
+To steer the beam, a progressive phase shift is introduced between elements. This allows the
+main beam direction to change without physically moving the array. However, steering away from
+the broadside direction may increase sidelobes and modify beamwidth.
+
+Yagi antenna
+------------
+
+The Yagi antenna is built progressively using a folded dipole as the driven element, two
+directors, and one reflector. The directors promote forward radiation, while the reflector
+reduces backward radiation. Their lengths and spacings are optimized to satisfy the design
+requirements simultaneously.
+
+The final design achieves approximately:
+
+- Directivity: 10.41 dBi.
+- Front-to-back ratio: 18.41 dB.
+- Input impedance: 90.8 Ω, almost purely real.
+
+The folded dipole helps obtain a suitable input resistance and partially compensates for the
+effect of the parasitic elements.
+
+Bandwidth
+---------
+
+Three conditions must be satisfied at the same time: directivity above 9 dB, front-to-back ratio
+above 15 dB, and VSWR below 2. The resulting operating interval is approximately 22.714 to
+23.284 MHz, corresponding to 0.571 MHz or 2.48% of the center frequency.
+
+The most restrictive condition is the front-to-back ratio. At the band edges, backward
+radiation increases, while directivity and impedance matching still retain some margin.
+
+Main lesson
+-----------
+
+In a multi-element antenna, the elements cannot be analyzed independently. Mutual coupling
+modifies both currents and impedances. Radiation-pattern control requires the adjustment of
+amplitudes and phases, and functional bandwidth may be limited by a radiation requirement rather
+than only by the reflection coefficient.
+
+
+PRACTICE 3. MICROSTRIP ANTENNAS
+===============================
+
+General objective
+-----------------
+
+The third practice designs a rectangular microstrip patch antenna fed by a coaxial probe at
+1.523 GHz. Two substrates are compared: FR4 and a thicker low-permittivity dielectric.
+
+The objective is to study how the substrate affects patch dimensions, feed position, matching,
+bandwidth, efficiency, and radiation patterns.
+
+Design method
+-------------
+
+The same procedure is followed in both cases:
+
+1. Analytical calculation of the approximate patch width and length.
+2. Calculation of the effective permittivity.
+3. Correction for fringing fields.
+4. Estimation of the input resistance and probe position.
+5. FEKO simulation.
+6. Parameter sweeps of patch length and feed position.
+7. Adjustment of the S11 minimum at 1.523 GHz.
+8. Calculation of bandwidth and E-plane and H-plane patterns.
+
+The analytical calculation provides a starting point, but electromagnetic optimization is still
+required because closed-form models do not include every effect associated with the feed and
+fringing fields.
+
+FR4 design
+----------
+
+FR4 makes it possible to obtain a compact antenna because of its relatively high permittivity,
+but it stores more energy inside the dielectric and introduces significant losses. The design
+is correctly matched at 1.523 GHz, with a reflection minimum close to -28 dB and a bandwidth of
+approximately 32 MHz for S11 below -10 dB.
+
+The theoretical efficiency is limited by dielectric losses and is estimated at approximately
+57.7%.
+
+Low-permittivity design
+-----------------------
+
+The second substrate has lower permittivity and greater thickness. As a result, the patch must
+be larger, but the fields extend more into the air and less energy is stored in the dielectric.
+
+The bandwidth increases to approximately 142 MHz. In addition, dielectric losses are much
+smaller and the calculated efficiency approaches 100%.
+
+Radiation patterns and polarization
+-----------------------------------
+
+Both designs radiate mainly in the broadside direction, perpendicular to the patch. The H-plane
+pattern remains relatively regular, while the E-plane shows more variation, especially with the
+thicker substrate. The copolar component is dominant and the cross-polar component remains lower,
+confirming the expected linear polarization.
+
+Main lesson
+-----------
+
+There is a fundamental design trade-off. High permittivity reduces antenna size, but it tends to
+reduce bandwidth and efficiency. Low permittivity and greater substrate thickness increase the
+physical dimensions, but improve bandwidth and reduce losses.
+
+
+PRACTICE 4. APERTURE ANTENNAS
+=============================
+
+General objective
+-----------------
+
+The fourth practice studies high-directivity antennas at 9.046 GHz. It includes the design of a
+pyramidal horn and a one-meter parabolic reflector fed by that horn.
+
+The practice relates aperture geometry to gain, beamwidth, phase error, and efficiency. It also
+studies the importance of the feed phase center and the effect of lateral feed displacement.
+
+Pyramidal horn
+--------------
+
+The horn begins with a rectangular waveguide and expands progressively in the E and H planes.
+Its dimensions are calculated with universal design curves and tables that relate aperture size,
+phase error, and field level.
+
+The complete antenna is then simulated in FEKO, obtaining Cartesian and polar patterns, E-plane
+and H-plane cuts, principal planes, and symmetry planes. The theoretical design predicts
+11.04 dBi, while the simulation gives approximately 11.44 dBi. The 0.40 dB difference is small
+and validates the approximations used.
+
+Parabolic reflector
+-------------------
+
+The horn is used to illuminate a one-meter reflector. The reflector converts the spherical wave
+generated by the feed into an almost planar wavefront, producing a narrow beam and high
+directivity.
+
+The feed position must be defined using its phase center, not simply the physical center of the
+horn aperture. The calculations indicate that the phase center lies approximately 2 to 3 mm
+behind the aperture. Three positions are compared: no correction, a correction of about 2.4 mm,
+and an overcorrection of about 4.8 mm.
+
+The corrected position improves phase coherence across the reflector surface and therefore
+improves gain and main-beam quality.
+
+Symmetry and feed displacement
+------------------------------
+
+With the feed centered, the structure has two symmetry planes, so only one quarter of the full
+geometry needs to be simulated. When the feed is shifted laterally, one symmetry plane is lost
+and the computational cost increases.
+
+Lateral displacements of 56.38 mm, 112.76 mm, and 169.14 mm are studied. Moving the horn shifts
+the main beam, allowing beam steering without rotating the entire reflector system. However,
+large displacements introduce aberrations and may reduce gain, increase pattern asymmetry, and
+raise sidelobe levels.
+
+Main lesson
+-----------
+
+Aperture antennas achieve high directivity through a large radiating surface with controlled
+phase. Horn design curves provide useful approximations, but in a reflector system the phase-
+center position is critical. At microwave frequencies, an error of only a few millimeters can
+noticeably affect performance.
+
+
+GENERAL CONCLUSION
+==================
+
+The four practices cover the main antenna types studied in the course:
+
+- Practice 1 establishes the numerical and physical foundations of wire-antenna analysis.
+- Practice 2 introduces radiation-pattern control with several coupled elements.
+- Practice 3 studies printed antennas and the effect of the dielectric substrate.
+- Practice 4 analyzes aperture systems intended to produce narrow beams and high gain.
+
+Together, they show that antenna behavior depends on geometry, materials, feeding, the
+electromagnetic environment, and frequency. Practical antenna design requires a combination of
+theory, simulation, optimization, and critical interpretation of the results.

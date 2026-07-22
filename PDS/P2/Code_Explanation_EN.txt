@@ -1,0 +1,263 @@
+DISCRETE SPECTRAL ANALYSIS
+Windowing, Resolution, and Spectral Leakage
+
+This package contains four MATLAB scripts:
+
+1. AnalisisEspectralMedianteDFT.m
+2. AnalisisSecuenciaSinusoidalDiscreta.m
+3. ResolucionEspectral.m
+4. ResolucionEspectralyFugas.m
+
+The examples use the Discrete Fourier Transform (DFT), implemented with
+MATLAB's FFT algorithm, to study practical frequency-analysis problems
+caused by finite observation intervals.
+
+
+======================================================================
+1. AnalisisEspectralMedianteDFT.m
+======================================================================
+
+PURPOSE
+
+This script analyzes a discrete-time signal formed by two cosine waves:
+
+    x[n] = cos(3*pi*n/5) + cos(pi*n/2)
+
+The two normalized angular frequencies are:
+
+    omega_1 = 3*pi/5 rad/sample
+    omega_2 = pi/2 rad/sample
+
+WINDOWING
+
+Although the signal is generated with 10,000 samples, only the first
+50 samples are retained. A length-50 rectangular window is followed by
+zeros:
+
+    w[n] = 1,  for 0 <= n <= 49
+    w[n] = 0,  otherwise
+
+The windowed signal is:
+
+    xw[n] = x[n]w[n]
+
+Multiplying by a finite window limits the observation interval and causes
+each ideal spectral line to spread into a main lobe and sidelobes.
+
+DENSE FFT
+
+A 10,000-point FFT is used to display a smooth-looking spectrum. This does
+not add new signal information. It only samples the same underlying
+frequency response on a denser frequency grid.
+
+SHORT DFT
+
+The script also computes a 60-point DFT. The 60 frequency samples are
+plotted with stems over the dense FFT curve.
+
+This comparison demonstrates the difference between:
+
+- The continuous-looking spectrum obtained through dense zero padding.
+- The actual discrete frequency samples produced by a finite-length DFT.
+
+Zero padding improves the visual frequency-grid spacing, but it does not
+improve the true ability to separate nearby components.
+
+
+======================================================================
+2. AnalisisSecuenciaSinusoidalDiscreta.m
+======================================================================
+
+PURPOSE
+
+This script analyzes one discrete-time cosine:
+
+    x[n] = cos(3*pi*n/5)
+
+The normalized angular frequency is 3*pi/5 rad/sample.
+
+DISCRETE-TIME PERIOD
+
+A discrete-time sinusoid is periodic when its normalized frequency is a
+rational multiple of 2*pi.
+
+For this signal:
+
+    omega_0/(2*pi) = 3/10
+
+Therefore, the fundamental period is 10 samples.
+
+FINITE OBSERVATION
+
+A rectangular window keeps the first 45 samples. The script first uses a
+10,000-point FFT to display the spectrum on a dense frequency grid.
+
+MINIMUM DFT LENGTH
+
+The selected DFT length should:
+
+1. Be at least as large as the observation-window length.
+2. Be a multiple of the sinusoid's 10-sample period.
+
+The smallest value satisfying both conditions is:
+
+    Nmin = 50
+
+The script compares the dense FFT with the 50-point DFT samples.
+
+This example shows how the DFT grid is related to the analyzed sequence
+length and to the periodicity of a discrete-time sinusoid.
+
+
+======================================================================
+3. ResolucionEspectral.m
+======================================================================
+
+PURPOSE
+
+This script studies spectral resolution using the same two-tone signal:
+
+    x[n] = cos(3*pi*n/5) + cos(pi*n/2)
+
+The two tones are relatively close in normalized frequency.
+
+CASE 1: L = 10
+
+Only 10 samples are observed through a rectangular window. A short window
+has a wide main lobe in the frequency domain.
+
+Because the main lobes overlap, the two sinusoidal components cannot be
+clearly distinguished. This is a spectral-resolution problem.
+
+CASE 2: L = 40
+
+The observation interval is increased to 40 samples. A longer rectangular
+window produces a narrower main lobe.
+
+The narrower lobes make it possible to distinguish the two frequency
+components more clearly.
+
+IMPORTANT CONCLUSION
+
+Increasing the FFT length alone does not improve true spectral resolution.
+It only adds more points between existing spectral samples.
+
+True resolution is mainly improved by increasing the observation duration,
+which means using more nonzero time-domain samples.
+
+
+======================================================================
+4. ResolucionEspectralyFugas.m
+======================================================================
+
+PURPOSE
+
+This script studies spectral leakage when two tones have very different
+amplitudes:
+
+    x[n] = cos(3*pi*n/5) + 0.02*cos(pi*n/2)
+
+The first sinusoid has amplitude 1 and the second has amplitude 0.02.
+
+The weak tone is approximately 34 dB below the strong tone:
+
+    20*log10(0.02/1) approximately -34 dB
+
+RECTANGULAR WINDOW
+
+The first analysis uses an 80-sample rectangular window.
+
+A rectangular window has a narrow main lobe, which is useful for resolution,
+but its sidelobes are relatively high. Energy from the strong sinusoid
+leaks into neighboring frequencies.
+
+These sidelobes can mask the weaker sinusoid. The problem is therefore not
+only frequency separation; it is also spectral leakage and dynamic range.
+
+HAMMING WINDOW
+
+The second analysis uses an 80-sample Hamming window.
+
+The Hamming window has lower sidelobes than the rectangular window, so less
+energy from the strong component leaks into other frequencies. This makes
+the weak tone easier to observe.
+
+The trade-off is that the Hamming window has a wider main lobe. In general:
+
+- Rectangular window: narrower main lobe, higher sidelobes.
+- Hamming window: wider main lobe, much lower sidelobes.
+
+WINDOW SELECTION
+
+The correct window depends on the analysis objective:
+
+- Use a narrow-main-lobe window when separating close components is the
+  main requirement.
+- Use a low-sidelobe window when detecting weak components near strong
+  components is the main requirement.
+
+
+======================================================================
+MAIN MATLAB FUNCTIONS
+======================================================================
+
+rectwin(L)
+    Creates a rectangular window of length L.
+
+hamming(L)
+    Creates a Hamming window of length L.
+
+fft(x,N)
+    Computes an N-point DFT using the FFT algorithm.
+
+abs(X)
+    Calculates the magnitude of a complex spectrum.
+
+20*log10(abs(X)+eps)
+    Converts spectral magnitude to decibels. The value eps prevents
+    log10(0), which would otherwise produce negative infinity.
+
+plot
+    Displays a continuous curve between frequency samples.
+
+stem
+    Displays individual DFT samples.
+
+xlim and ylim
+    Control the visible horizontal and vertical axis ranges.
+
+
+======================================================================
+KEY CONCEPTS
+======================================================================
+
+1. DFT and FFT
+
+The DFT represents a finite sequence at a discrete set of frequencies.
+The FFT is an efficient algorithm for computing the DFT.
+
+2. Windowing
+
+A finite observation interval is equivalent to multiplying the signal by
+a window. Windowing spreads ideal spectral lines into lobes.
+
+3. Zero Padding
+
+Zero padding produces a denser frequency grid and a smoother-looking plot,
+but it does not increase the physical information in the original data.
+
+4. Spectral Resolution
+
+Resolution is the ability to distinguish nearby frequency components.
+Longer observation windows generally produce narrower main lobes and better
+resolution.
+
+5. Spectral Leakage
+
+Leakage is the spreading of energy from one frequency into neighboring
+frequencies. High sidelobes can hide weak spectral components.
+
+6. Window Trade-Off
+
+Every window involves a compromise between main-lobe width and sidelobe
+level. No single window is best for all applications.

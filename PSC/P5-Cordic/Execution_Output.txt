@@ -1,0 +1,16 @@
+EXPECTED NUMERICAL SUMMARY
+==========================
+
+CORDIC steps: 32
+CORDIC gain: 1.646760258121
+Pre-scaled initial x: 0.303626467504
+
+Tone  440 Hz -> FFT peak at 440.0 Hz
+Tone 1000 Hz -> FFT peak at 1000.0 Hz
+Tone 2300 Hz -> FFT peak at 2300.0 Hz
+
+Maximum vector error over [-pi, pi]: 2.327e-10
+RMS vector error over [-pi, pi]: 1.352e-10
+
+The MATLAB script also creates cordic_results.mat and regenerates all plots
+inside the results_figures folder.
