@@ -1,6 +1,6 @@
 # Antennas & EMC — Laboratory Practices
 
-![Cover](Portada.png)
+<p align="center"><img src="../assets/covers/antennas.svg" width="830" alt="Antennas & EMC"/></p>
 
 Four full-wave simulation practices (FEKO, complemented with analytical models and MATLAB) covering the antenna design chain in a natural progression: from basic wire radiators to high-directivity apertures.
 

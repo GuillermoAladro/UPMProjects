@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="Segoe UI, Ubuntu, Helvetica, Arial, sans-serif">
+  <rect width="800" height="400" rx="16" fill="#0b1220"/>
+  <g stroke="#16233c" opacity=".5"><path d="M0 100H800M0 200H800M0 300H800M160 0V400M320 0V400M480 0V400M640 0V400"/></g>
+  <text x="44" y="66" fill="#22d3ee" font-size="15" letter-spacing="4">03 &#183; HIGH-FREQUENCY CIRCUITS &#183; TAF</text>
+  <text x="44" y="120" fill="#e5edf7" font-size="38" font-weight="700">RF Circuit Design,</text>
+  <text x="44" y="166" fill="#e5edf7" font-size="38" font-weight="700">Build &amp; Measure</text>
+  <g font-size="13" fill="#9fb3d1">
+    <rect x="44" y="200" width="94" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="56" y="218">PIN Switch</text>
+    <rect x="148" y="200" width="122" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="160" y="218">Chebyshev BPF</text>
+    <rect x="280" y="200" width="86" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="292" y="218">Amplifier</text>
+  </g>
+  <line x1="470" y1="310" x2="770" y2="310" stroke="#34537d" stroke-width="2"/>
+  <line x1="470" y1="130" x2="470" y2="310" stroke="#34537d" stroke-width="2"/>
+  <text x="450" y="145" fill="#8fa6c7" font-size="12">dB</text>
+  <text x="760" y="330" fill="#8fa6c7" font-size="12">f</text>
+  <line x1="640" y1="130" x2="640" y2="310" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.8"/>
+  <text x="652" y="146" fill="#f59e0b" font-size="13">f0 = 1.45 GHz</text>
+  <path d="M470 300 C520 300 540 295 560 250 C575 215 585 160 620 158 L660 158 C695 160 705 215 720 250 C740 295 750 300 770 300" fill="none" stroke="#22d3ee" stroke-width="3" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100">
+    <animate attributeName="stroke-dashoffset" values="100;0;0" keyTimes="0;0.6;1" dur="4s" repeatCount="indefinite"/>
+  </path>
+</svg>

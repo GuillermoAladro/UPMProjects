@@ -1,5 +1,7 @@
 # PSC — Communication Systems Simulation (MATLAB)
 
+<p align="center"><img src="../assets/covers/psc.svg" width="830" alt="Communication Systems Simulation"/></p>
+
 Six MATLAB practices on statistical signal processing and digital synthesis for communications. Each folder contains code, result figures and an English technical report (PDF).
 
 - **P1 — Spectral Estimation**: periodogram, Welch and STFT analysis (including 3-D views), with reference validation data.

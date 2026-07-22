@@ -1,5 +1,7 @@
 # PDS — Digital Signal Processing (MATLAB)
 
+<p align="center"><img src="../assets/covers/pds.svg" width="830" alt="Digital Signal Processing"/></p>
+
 Four MATLAB lab packages covering the DSP fundamentals pipeline. Each folder includes commented scripts, data files and a `Code_Explanation_EN.txt` describing purpose and results.
 
 - **P1 — Sampling & Multirate**: Nyquist–Shannon theorem, aliasing, interpolation/decimation and audio sample-rate conversion.

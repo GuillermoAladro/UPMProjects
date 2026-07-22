@@ -1,6 +1,6 @@
 # TAF — High-Frequency Circuit Design
 
-![Cover](Cover%20p1.png)
+<p align="center"><img src="../assets/covers/taf.svg" width="830" alt="High-Frequency Circuits"/></p>
 
 Three RF circuits taken through the complete cycle: design → simulation → microstrip fabrication → S-parameter measurement → physical retuning of the prototype.
 

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="Segoe UI, Ubuntu, Helvetica, Arial, sans-serif">
+  <rect width="800" height="400" rx="16" fill="#0b1220"/>
+  <g stroke="#16233c" opacity=".5"><path d="M0 100H800M0 200H800M0 300H800M160 0V400M320 0V400M480 0V400M640 0V400"/></g>
+  <text x="44" y="66" fill="#22d3ee" font-size="15" letter-spacing="4">01 &#183; ANTENNAS &amp; EMC</text>
+  <text x="44" y="120" fill="#e5edf7" font-size="38" font-weight="700">Full-Wave Antenna</text>
+  <text x="44" y="166" fill="#e5edf7" font-size="38" font-weight="700">Simulation &#183; FEKO</text>
+  <g font-size="13" fill="#9fb3d1">
+    <rect x="44" y="200" width="58" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="56" y="218">MoM</text>
+    <rect x="112" y="200" width="102" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="124" y="218">Wire &amp; Yagi</text>
+    <rect x="224" y="200" width="92" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="236" y="218">Microstrip</text>
+    <rect x="326" y="200" width="90" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="338" y="218">Apertures</text>
+  </g>
+  <g transform="translate(600,205)">
+    <line x1="0" y1="-85" x2="0" y2="-8" stroke="#e5edf7" stroke-width="6" stroke-linecap="round"/>
+    <line x1="0" y1="8" x2="0" y2="85" stroke="#e5edf7" stroke-width="6" stroke-linecap="round"/>
+    <circle r="5" fill="#f59e0b"/>
+    <circle r="20" fill="none" stroke="#22d3ee" stroke-width="2" opacity="0">
+      <animate attributeName="r" from="20" to="130" dur="3s" begin="0s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.9;0" dur="3s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="20" fill="none" stroke="#22d3ee" stroke-width="2" opacity="0">
+      <animate attributeName="r" from="20" to="130" dur="3s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.9;0" dur="3s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="20" fill="none" stroke="#22d3ee" stroke-width="2" opacity="0">
+      <animate attributeName="r" from="20" to="130" dur="3s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.9;0" dur="3s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

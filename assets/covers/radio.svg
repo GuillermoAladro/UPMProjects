@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="Segoe UI, Ubuntu, Helvetica, Arial, sans-serif">
+  <rect width="800" height="400" rx="16" fill="#0b1220"/>
+  <g stroke="#16233c" opacity=".5"><path d="M0 100H800M0 200H800M0 300H800M160 0V400M320 0V400M480 0V400M640 0V400"/></g>
+  <text x="44" y="66" fill="#22d3ee" font-size="15" letter-spacing="4">02 &#183; RADIOCOMMUNICATIONS</text>
+  <text x="44" y="120" fill="#e5edf7" font-size="38" font-weight="700">Radio Link Planning</text>
+  <text x="44" y="166" fill="#e5edf7" font-size="38" font-weight="700">&amp; SDR Measurement</text>
+  <g font-size="13" fill="#9fb3d1">
+    <rect x="44" y="200" width="96" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="56" y="218">26 GHz PtP</text>
+    <rect x="150" y="200" width="66" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="162" y="218">DVB-T</text>
+    <rect x="226" y="200" width="98" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="238" y="218">SDR/SINAD</text>
+    <rect x="334" y="200" width="72" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="346" y="218">4G-LTE</text>
+  </g>
+  <line x1="470" y1="320" x2="770" y2="320" stroke="#1e3a5f" stroke-width="2"/>
+  <g stroke="#8fa6c7" stroke-width="4" stroke-linecap="round" fill="none">
+    <path d="M520 320 L540 200 L560 320"/><path d="M528 280 L552 280 M524 300 L556 300"/>
+    <path d="M680 320 L700 210 L720 320"/><path d="M688 275 L712 275 M684 297 L716 297"/>
+  </g>
+  <circle cx="540" cy="195" r="6" fill="#22d3ee"/><circle cx="700" cy="205" r="6" fill="#22d3ee"/>
+  <line x1="540" y1="195" x2="700" y2="205" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="7 7">
+    <animate attributeName="stroke-dashoffset" from="0" to="-28" dur="1s" repeatCount="indefinite"/>
+  </line>
+  <circle r="5" fill="#f59e0b">
+    <animateMotion path="M540 195 L700 205" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="540" cy="195" r="10" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0">
+    <animate attributeName="r" from="10" to="45" dur="2.4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.8;0" dur="2.4s" repeatCount="indefinite"/>
+  </circle>
+</svg>

@@ -1,6 +1,6 @@
 # Radiocommunications — Planning & SDR Practices
 
-![Cover](Cover%20P1.png)
+<p align="center"><img src="../assets/covers/radio.svg" width="830" alt="Radiocommunications"/></p>
 
 Four end-to-end radio engineering exercises combining link-budget theory, professional planning tools (Xirio), commercial equipment selection, ITU-R criteria and hands-on SDR measurement.
 

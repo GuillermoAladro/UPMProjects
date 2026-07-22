@@ -1,5 +1,7 @@
 # Quantum Computing — Qiskit Practices (Python)
 
+<p align="center"><img src="../assets/covers/quantum.svg" width="830" alt="Quantum Computing"/></p>
+
 Three self-contained Qiskit practices. Each folder includes runnable Python scripts and notebooks, generated figures, JSON results and an English report (PDF).
 
 - **IQC1 — Quantum Fundamentals**: single-qubit rotations, controlled gates, Bell state Φ⁺ and a no-cloning demonstration.

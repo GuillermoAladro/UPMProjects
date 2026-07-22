@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="Segoe UI, Ubuntu, Helvetica, Arial, sans-serif">
+  <rect width="800" height="400" rx="16" fill="#0b1220"/>
+  <g stroke="#16233c" opacity=".5"><path d="M0 100H800M0 200H800M0 300H800M160 0V400M320 0V400M480 0V400M640 0V400"/></g>
+  <text x="44" y="66" fill="#22d3ee" font-size="15" letter-spacing="4">06 &#183; QUANTUM COMPUTING</text>
+  <text x="44" y="120" fill="#e5edf7" font-size="38" font-weight="700">Qubits, Entanglement</text>
+  <text x="44" y="166" fill="#e5edf7" font-size="38" font-weight="700">&amp; the QFT</text>
+  <g font-size="13" fill="#9fb3d1">
+    <rect x="44" y="200" width="62" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="56" y="218">Qiskit</text>
+    <rect x="116" y="200" width="94" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="128" y="218">Bell States</text>
+    <rect x="220" y="200" width="112" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="232" y="218">Teleportation</text>
+    <rect x="342" y="200" width="92" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="354" y="218">QFT Adder</text>
+  </g>
+  <g transform="translate(620,215)">
+    <circle r="92" fill="none" stroke="#34537d" stroke-width="2"/>
+    <ellipse rx="92" ry="26" fill="none" stroke="#34537d" stroke-width="1.5" stroke-dasharray="3 5"/>
+    <text x="-14" y="-104" fill="#9fb3d1" font-size="15">|0&#10217;</text>
+    <text x="-14" y="120" fill="#9fb3d1" font-size="15">|1&#10217;</text>
+    <g>
+      <line x1="0" y1="0" x2="0" y2="-68" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
+      <polygon points="0,-80 -7,-62 7,-62" fill="#f59e0b"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="5s" repeatCount="indefinite"/>
+    </g>
+    <circle r="5" fill="#f59e0b"/>
+    <circle cx="70" cy="-55" r="3.5" fill="#22d3ee" opacity="0"><animate attributeName="opacity" values="0;1;0" dur="2.6s" begin="0s" repeatCount="indefinite"/></circle>
+    <circle cx="-78" cy="40" r="3.5" fill="#22d3ee" opacity="0"><animate attributeName="opacity" values="0;1;0" dur="2.6s" begin="0.9s" repeatCount="indefinite"/></circle>
+    <circle cx="30" cy="80" r="3.5" fill="#22d3ee" opacity="0"><animate attributeName="opacity" values="0;1;0" dur="2.6s" begin="1.8s" repeatCount="indefinite"/></circle>
+  </g>
+</svg>

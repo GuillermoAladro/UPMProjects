@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="Segoe UI, Ubuntu, Helvetica, Arial, sans-serif">
+  <defs><clipPath id="w"><rect x="470" y="140" width="300" height="160"/></clipPath></defs>
+  <rect width="800" height="400" rx="16" fill="#0b1220"/>
+  <g stroke="#16233c" opacity=".5"><path d="M0 100H800M0 200H800M0 300H800M160 0V400M320 0V400M480 0V400M640 0V400"/></g>
+  <text x="44" y="66" fill="#22d3ee" font-size="15" letter-spacing="4">04 &#183; DIGITAL SIGNAL PROCESSING</text>
+  <text x="44" y="120" fill="#e5edf7" font-size="38" font-weight="700">Sampling, Filters</text>
+  <text x="44" y="166" fill="#e5edf7" font-size="38" font-weight="700">&amp; the DFT</text>
+  <g font-size="13" fill="#9fb3d1">
+    <rect x="44" y="200" width="84" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="56" y="218">Multirate</text>
+    <rect x="138" y="200" width="74" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="150" y="218">FIR/IIR</text>
+    <rect x="222" y="200" width="112" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="234" y="218">Overlap-Save</text>
+    <rect x="344" y="200" width="78" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="356" y="218">MATLAB</text>
+  </g>
+  <g clip-path="url(#w)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="-145 0" dur="2.2s" repeatCount="indefinite"/>
+      <path d="M420 220 Q456.25 110 492.5 220 T565 220 T637.5 220 T710 220 T782.5 220 T855 220 T927.5 220" fill="none" stroke="#22d3ee" stroke-width="3"/>
+      <g stroke="#f59e0b" stroke-width="2">
+        <line x1="456.25" y1="220" x2="456.25" y2="165"/><line x1="528.75" y1="220" x2="528.75" y2="275"/>
+        <line x1="601.25" y1="220" x2="601.25" y2="165"/><line x1="673.75" y1="220" x2="673.75" y2="275"/>
+        <line x1="746.25" y1="220" x2="746.25" y2="165"/><line x1="818.75" y1="220" x2="818.75" y2="275"/>
+        <line x1="891.25" y1="220" x2="891.25" y2="165"/>
+      </g>
+      <g fill="#f59e0b">
+        <circle cx="456.25" cy="165" r="4.5"/><circle cx="528.75" cy="275" r="4.5"/><circle cx="601.25" cy="165" r="4.5"/>
+        <circle cx="673.75" cy="275" r="4.5"/><circle cx="746.25" cy="165" r="4.5"/><circle cx="818.75" cy="275" r="4.5"/>
+        <circle cx="891.25" cy="165" r="4.5"/>
+      </g>
+    </g>
+  </g>
+  <line x1="470" y1="220" x2="770" y2="220" stroke="#34537d" stroke-width="1.5" stroke-dasharray="3 6"/>
+</svg>

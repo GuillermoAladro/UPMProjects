@@ -1,17 +1,39 @@
-# Academic Projects Portfolio
+<p align="center">
+  <img src="assets/banner.svg" alt="Guillermo Aladro Abad — Telecommunications Engineering Portfolio" width="100%"/>
+</p>
 
-Engineering portfolio of **Guillermo Aladro Abad** — final-year Telecommunications Systems Engineering student at ETSIST-UPM (Madrid), specializing in radiocommunications, antennas and satellite systems.
+<p align="center">
+  <img src="https://img.shields.io/badge/MATLAB-Signal_%26_RF-ff6f00?style=for-the-badge" alt="MATLAB"/>
+  <img src="https://img.shields.io/badge/FEKO-Full--wave_EM-16a34a?style=for-the-badge" alt="FEKO"/>
+  <img src="https://img.shields.io/badge/Python-Qiskit-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python / Qiskit"/>
+  <img src="https://img.shields.io/badge/C-POSIX-00599C?style=for-the-badge" alt="C POSIX"/>
+  <img src="https://img.shields.io/github/last-commit/GuillermoAladro/UPMProjects?style=for-the-badge&color=0ea5e9" alt="Last commit"/>
+</p>
 
-The repository is organized into **7 areas**, one per portfolio issue. Each folder contains its own introduction (README), reports, code and results.
+<p align="center">
+  Final-year <b>Telecommunications Systems Engineering</b> student at <b>ETSIST-UPM (Madrid)</b>,<br/>
+  specializing in radiocommunications, antennas and satellite systems.<br/>
+  <sub>Seven project areas — each folder has its own introduction, reports, code and results. Click a card to explore.</sub>
+</p>
 
-| # | Area | Folder | Highlights |
-|---|------|--------|------------|
-| 1 | Antennas & EMC | [Antenas](Antenas/) | FEKO full-wave simulation: wire antennas, arrays/Yagi, microstrip patches, horns & reflectors |
-| 2 | Radiocommunications | [Radio](Radio/) | 26 GHz link planning, DVB-T gap filler, SDR + SINAD measurement, 4G-LTE coverage |
-| 3 | High-Frequency Circuits | [TAF](TAF/) | PIN-diode RF switch, coupled-line bandpass filter, small-signal amplifier — built and measured |
-| 4 | Digital Signal Processing | [PDS](PDS/) | Sampling & multirate, DFT spectral analysis, FIR/IIR design, overlap-save fast convolution |
-| 5 | Communication Systems Simulation | [PSC](PSC/) | Spectral estimation, BER (Monte Carlo + importance sampling), noise synthesis, CORDIC, DDS |
-| 6 | Quantum Computing | [Quantum_Computing](Quantum_Computing/) | Qiskit: fundamentals, entanglement & teleportation, QFT adder |
-| 7 | Operating Systems | [Operativos](Operativos/) | Concurrent C on POSIX/Linux: process-based image controller and TCP prime server |
+<table>
+  <tr>
+    <td width="50%" align="center"><a href="Antenas/"><img src="assets/covers/antennas.svg" width="100%" alt="Antennas &amp; EMC"/></a></td>
+    <td width="50%" align="center"><a href="Radio/"><img src="assets/covers/radio.svg" width="100%" alt="Radiocommunications"/></a></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><a href="TAF/"><img src="assets/covers/taf.svg" width="100%" alt="High-Frequency Circuits (TAF)"/></a></td>
+    <td width="50%" align="center"><a href="PSC/"><img src="assets/covers/psc.svg" width="100%" alt="Communication Systems Simulation (PSC)"/></a></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><a href="PDS/"><img src="assets/covers/pds.svg" width="100%" alt="Digital Signal Processing (PDS)"/></a></td>
+    <td width="50%" align="center"><a href="Quantum_Computing/"><img src="assets/covers/quantum.svg" width="100%" alt="Quantum Computing"/></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><a href="Operativos/"><img src="assets/covers/os.svg" width="50%" alt="Operating Systems"/></a></td>
+  </tr>
+</table>
 
-**Tools & technologies:** FEKO · MATLAB / Simulink · Xirio · ADALM-PLUTO SDR · Microstrip fabrication & VNA measurement · Python / Qiskit · C (POSIX)
+<p align="center">
+  <sub>FEKO &#183; MATLAB / Simulink &#183; Xirio &#183; ADALM-PLUTO SDR &#183; Microstrip fabrication &amp; VNA measurement &#183; Python / Qiskit &#183; C (POSIX) &#183; Git</sub>
+</p>

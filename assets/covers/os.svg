@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="Segoe UI, Ubuntu, Helvetica, Arial, sans-serif">
+  <rect width="800" height="400" rx="16" fill="#0b1220"/>
+  <g stroke="#16233c" opacity=".5"><path d="M0 100H800M0 200H800M0 300H800M160 0V400M320 0V400M480 0V400M640 0V400"/></g>
+  <text x="44" y="66" fill="#22d3ee" font-size="15" letter-spacing="4">07 &#183; OPERATING SYSTEMS</text>
+  <text x="44" y="120" fill="#e5edf7" font-size="38" font-weight="700">Concurrent C</text>
+  <text x="44" y="166" fill="#e5edf7" font-size="38" font-weight="700">on POSIX &#183; Linux</text>
+  <g font-size="13" fill="#9fb3d1">
+    <rect x="44" y="200" width="88" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="56" y="218">fork/exec</text>
+    <rect x="142" y="200" width="74" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="154" y="218">Sockets</text>
+    <rect x="226" y="200" width="70" height="26" rx="13" fill="#12233f" stroke="#1f3a5f"/><text x="238" y="218">Signals</text>
+  </g>
+  <rect x="460" y="110" width="310" height="150" rx="10" fill="#0e1930" stroke="#1f3a5f"/>
+  <circle cx="480" cy="128" r="5" fill="#ef4444"/><circle cx="498" cy="128" r="5" fill="#f59e0b"/><circle cx="516" cy="128" r="5" fill="#22c55e"/>
+  <g font-family="Consolas, Menlo, monospace" font-size="13">
+    <text x="474" y="162" fill="#9fb3d1">$ ./controlador out img/*.jpg</text>
+    <text x="474" y="184" fill="#22d3ee">fork() &#215;4 &#8594; execlp(convert)</text>
+    <text x="474" y="206" fill="#9fb3d1">$ ./servidor -p 4321</text>
+    <text x="474" y="228" fill="#22d3ee">listening &#183; SIGCHLD reaper</text>
+  </g>
+  <rect x="640" y="216" width="9" height="14" fill="#e5edf7">
+    <animate attributeName="opacity" values="1;0" dur="1s" calcMode="discrete" repeatCount="indefinite"/>
+  </rect>
+  <rect x="585" y="282" width="64" height="26" rx="6" fill="#12233f" stroke="#22d3ee"/>
+  <text x="597" y="300" fill="#e5edf7" font-size="13">parent</text>
+  <line x1="617" y1="308" x2="532" y2="332" stroke="#34537d" stroke-width="1.5"/>
+  <line x1="617" y1="308" x2="617" y2="332" stroke="#34537d" stroke-width="1.5"/>
+  <line x1="617" y1="308" x2="702" y2="332" stroke="#34537d" stroke-width="1.5"/>
+  <g font-size="12" fill="#9fb3d1">
+    <g opacity="0.35"><rect x="502" y="332" width="60" height="24" rx="6" fill="#12233f" stroke="#1f3a5f"/><text x="517" y="349">child</text><animate attributeName="opacity" values="0.35;1;0.35" dur="1.8s" begin="0s" repeatCount="indefinite"/></g>
+    <g opacity="0.35"><rect x="587" y="332" width="60" height="24" rx="6" fill="#12233f" stroke="#1f3a5f"/><text x="602" y="349">child</text><animate attributeName="opacity" values="0.35;1;0.35" dur="1.8s" begin="0.6s" repeatCount="indefinite"/></g>
+    <g opacity="0.35"><rect x="672" y="332" width="60" height="24" rx="6" fill="#12233f" stroke="#1f3a5f"/><text x="687" y="349">child</text><animate attributeName="opacity" values="0.35;1;0.35" dur="1.8s" begin="1.2s" repeatCount="indefinite"/></g>
+  </g>
+</svg>
