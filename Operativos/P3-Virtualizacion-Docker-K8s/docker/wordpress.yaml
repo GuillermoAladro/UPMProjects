@@ -1,0 +1,43 @@
+# Question 13 - The same WordPress + MariaDB stack as Questions 11 and 12,
+# declared for Docker Compose instead of two docker run commands.
+# Names and the published port differ from the manual deployment so both
+# can coexist on the same host.
+#
+#   docker compose -f wordpress.yaml up -d
+#   docker compose -f wordpress.yaml ps | logs | stop | rm
+#
+# The site is then served on http://localhost:9001
+services:
+  serv_mariadb:
+    image: mariadb
+    container_name: serv_mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: supercontra
+      MYSQL_DATABASE: bdatos_wp
+      MYSQL_USER: usu_wp
+      MYSQL_PASSWORD: contra_wp
+    volumes:
+      - datos_mariadb:/var/lib/mysql
+
+  serv_wp:
+    image: wordpress
+    container_name: serv_wp
+    restart: always
+    depends_on:
+      - serv_mariadb
+    environment:
+      WORDPRESS_DB_HOST: serv_mariadb
+      WORDPRESS_DB_NAME: bdatos_wp
+      WORDPRESS_DB_USER: usu_wp
+      WORDPRESS_DB_PASSWORD: contra_wp
+    ports:
+      - "9001:80"
+    volumes:
+      - datos_wp:/var/www/html/wp-content
+
+# Named volumes managed by Docker: the databases and the WordPress content
+# survive the removal of the containers.
+volumes:
+  datos_mariadb:
+  datos_wp:

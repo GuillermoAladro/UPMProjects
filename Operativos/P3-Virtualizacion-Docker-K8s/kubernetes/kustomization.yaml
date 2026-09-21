@@ -1,0 +1,25 @@
+# Question 26 - declarative WordPress deployment on minikube.
+#
+# The two upstream manifests are downloaded first, and the WordPress service is
+# switched from LoadBalancer to NodePort because minikube has no cloud load
+# balancer behind it:
+#
+#   curl -LO https://k8s.io/examples/application/wordpress/mysql-deployment.yaml
+#   curl -LO https://k8s.io/examples/application/wordpress/wordpress-deployment.yaml
+#   sed -i '' 's/LoadBalancer/NodePort/' wordpress-deployment.yaml
+#
+# Then this kustomization generates the database password as a Secret and
+# applies everything together:
+#
+#   kubectl apply -k ./
+#   minikube service wordpress --url
+#
+# Unlike the bare pods above, these manifests declare Deployments, so the
+# control plane recreates a pod that dies or whose node restarts.
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=YOUR_PASSWORD
+resources:
+  - mysql-deployment.yaml
+  - wordpress-deployment.yaml

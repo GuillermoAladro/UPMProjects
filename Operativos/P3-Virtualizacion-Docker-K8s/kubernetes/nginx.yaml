@@ -1,0 +1,40 @@
+# Questions 18, 20 and 23 - nginx pod plus the service that exposes it.
+#
+# The pod alone is reachable only through `kubectl port-forward`; its IP is
+# neither stable nor routable from outside the cluster. The Service gives it a
+# stable name (servidorweb) inside the cluster, and finds its backing pods
+# through the label selector rather than by name.
+#
+#   kubectl apply -f nginx.yaml
+#   kubectl get pods -o wide
+#   kubectl get services
+#   kubectl exec -it pod/base -- bash   # then: curl http://servidorweb:80
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app.kubernetes.io/name: ServidorP3
+spec:
+  containers:
+  - name: nginx
+    # Question 20: changing this tag and re-applying the file makes the control
+    # plane destroy the pod and create a new one from the new image.
+    image: nginx:1.25
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: servidorweb
+spec:
+  # ClusterIP is reachable from inside the cluster only. Exposing the service
+  # outside minikube would need NodePort, LoadBalancer or an Ingress.
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: ServidorP3
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

@@ -1,0 +1,41 @@
+# Questions 21 and 25 - auxiliary Ubuntu pod with persistent storage.
+#
+# The pod is used as a client from inside the cluster (Question 22), and its
+# /datos directory is backed by a PersistentVolumeClaim, so the data survives
+# the pod being deleted and recreated. In minikube the claim is satisfied by
+# the hostpath provisioner, which stores the volume on the node's filesystem
+# under /var/lib/docker/volumes/minikube/_data/hostpath-provisioner.
+#
+#   kubectl apply -f ubuntu.yaml
+#   kubectl get pvc
+#   kubectl get pv
+#   kubectl exec -it base -- bash    # then: df
+apiVersion: v1
+kind: Pod
+metadata:
+  name: base
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu:latest
+    # Without a long-running command the container would exit immediately and
+    # the pod would restart in a loop.
+    command: ["/bin/sleep", "30d"]
+    volumeMounts:
+      - name: datos-ubuntu
+        mountPath: /datos
+  volumes:
+  - name: datos-ubuntu
+    persistentVolumeClaim:
+      claimName: datos-ubuntu
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datos-ubuntu
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
