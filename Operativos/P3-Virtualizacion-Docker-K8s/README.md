@@ -9,6 +9,7 @@ declaratively on a Kubernetes cluster.
 
 | Path | What it is |
 |---|---|
+| [`Practice_3_Virtualization_Docker_Kubernetes_Guillermo_Aladro_Abad.pdf`](Practice_3_Virtualization_Docker_Kubernetes_Guillermo_Aladro_Abad.pdf) | Full report: the procedure step by step, with the configuration files as an appendix |
 | [`docker/install-docker.sh`](docker/install-docker.sh) | Question 1 — containerd + Docker installation on Debian, as root |
 | [`docker/runbook.md`](docker/runbook.md) | Questions 1–14 — container lifecycle, images, volumes, ports, cgroup limits, WordPress by hand |
 | [`docker/wordpress.yaml`](docker/wordpress.yaml) | Question 13 — the WordPress + MariaDB stack as a Compose file |

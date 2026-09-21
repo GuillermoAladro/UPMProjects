@@ -30,5 +30,5 @@ Kubernetes cluster: namespaces and cgroups, volumes and published ports,
 Compose, then minikube with pods, services, persistent volume claims and
 kustomize.
 
-Manifests, runbooks and the technical discussion in
+The full report is in [`Practice_3_Virtualization_Docker_Kubernetes_Guillermo_Aladro_Abad.pdf`](P3-Virtualizacion-Docker-K8s/Practice_3_Virtualization_Docker_Kubernetes_Guillermo_Aladro_Abad.pdf); manifests, runbooks and the technical discussion in
 [`P3-Virtualizacion-Docker-K8s/README.md`](P3-Virtualizacion-Docker-K8s/README.md).
